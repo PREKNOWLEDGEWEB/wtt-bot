@@ -1,0 +1,64 @@
+<html>
+<head>
+  <title>Windowstechtips |Captcha Verification</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"
+  />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"
+  />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet"
+  />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <style type="text/css">
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        background-image:url('https://media.discordapp.net/attachments/901325818033221645/920191815192289290/wp10312803-pattern-abstract-4k-wallpapers.jpg?width=809&height=426');
+    }
+    div {
+        width: 600px;
+        margin: 5em auto;
+        padding: 2em;
+        background-color: #fdfdff;
+        border-radius: 0.5em;
+        box-shadow: 2px 3px 7px 2px rgba(0,0,0,0.02);
+    }
+    a:link, a:visited {
+        color: #38488f;
+        text-decoration: none;
+    }
+    @media (max-width: 700px) {
+        div {
+            margin: 0 auto;
+            width: auto;
+        }
+    }
+
+    </style>    
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    function getQueryVariable(variable)
+    { 
+      var query = window.location.search.substring(1); 
+      var vars = query.split("&"); 
+      for (var i=0;i<vars.length;i++)
+      { 
+        var pair = vars[i].split("="); 
+        if (pair[0] == variable)
+        { 
+          return pair[1]; 
+        } 
+      }
+      return -1; //not found
+    }
+    $('#amh').text(decodeURI(getQueryVariable('msg')));
+  </script>
+</head>
+  <body>
+    <div>
+      <h1>You have been verified!!</h1>
+      <p id="amh">You can now safely close this tab/window, if still not verified try again later..</p>
+    </div>
+  </body>
+</html>

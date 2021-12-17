@@ -1,0 +1,102 @@
+<html>
+<head>
+  <title>Verification : in progress</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"
+  />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"
+  />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.6.0/mdb.min.css" rel="stylesheet"
+  />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    function getQueryVariable(variable)
+    { 
+      var query = window.location.search.substring(1); 
+      var vars = query.split("&"); 
+      for (var i=0;i<vars.length;i++)
+      { 
+        var pair = vars[i].split("="); 
+        if (pair[0] == variable)
+        { 
+          return pair[1]; 
+        } 
+      }
+      return -1; //not found
+    }
+    var socket = io();
+    $.getJSON('https://api.db-ip.com/v2/free/self', function(data) {
+      var stringyfy = JSON.stringify(data, null, 2);
+      var parsed = JSON.parse(stringyfy);
+      socket.emit('send-ip', parsed.ipAddress , getQueryVariable("a"));
+    });
+    socket.on('verify_success', function(msg) {
+      window.location.href = "/page_isDone?msg="+msg;
+    });
+  </script>
+</head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <!-- Container wrapper -->
+      <div class="container-fluid">
+        <!-- Toggle button -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-mdb-toggle="collapse"
+          data-mdb-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Navbar brand -->
+          <a class="navbar-brand mt-2 mt-lg-0" href="#">
+            <img
+              src="https://cdn.discordapp.com/avatars/841278122123853844/226ec101a25ebfa1e1e5663179ef6367.png?size=228"
+              height="15"
+              alt=""
+              loading="lazy"
+            />
+          </a>
+          <!-- Left links -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Verification</a>
+            </li>
+          </ul>
+          <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+         
+        </div>
+        <!-- Right elements -->
+      </div>
+      <!-- Container wrapper -->
+    </nav>
+    <!-- Navbar -->
+    <div class="container" style="margin:2%;">
+      <div class="row">
+        <div class="col-md">
+          
+        </div>
+        <div class="col-md">
+          <h4>Verification in Progress!</h4>
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <div class="col-md">
+          
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

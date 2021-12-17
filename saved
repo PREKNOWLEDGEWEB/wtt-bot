@@ -1,0 +1,402 @@
+client.on('message', message => {
+  if(message.content.includes('WTT!')){
+    prefix = 'WTT!';
+  }else{
+    prefix = 'wtt!';
+  }
+  let meme = Memer.meme();
+  blockword();
+  if(message.author.bot)return;
+  if(!message.channel.name.includes("spam")){
+    setRank(message.author.id,message.author.username,message);
+  }
+  if(message.author.bot)return;
+  //bad words remover
+  if(message.content.includes('ass')){
+    if(message.content.includes('class')){}else{
+      message.delete();
+    }
+  }
+  if(message.content.includes('bruh')){
+    message.channel.send("Bruh indeed LMAO");
+  }
+  //end badwords remover
+  if(message.content.includes('pls rob <@!841278122123853844>')){
+    message.channel.send("Ur trying to rob me what");
+  }else if(message.content === 'pls meme'){
+      setTimeout(function(){
+        message.channel.send('lol very funny');
+      },2000)
+  }
+	if (message.content === `${prefix}ping`) {
+		message.channel.send('Pong.');
+	}else if(message.content === `${prefix}about`){
+    message.channel.send("This bot is made for WindowsTechTips");
+  }else if(message.content === `${prefix}help`){
+    const myCoolMenu = new MenuBuilder()
+    .addLabel('Moderation', { description: 'Click here to know more', value: 'value-1' })
+    .addLabel('Normal People', { description: 'xD', value: 'value-2' })
+    .addLabel('ChatBot', {
+        description: 'OMG', value: 'value-3', emoji: {
+            name: '🌌'
+        }
+    })
+    .setMaxValues(1)
+    .setMinValues(1)
+    .setCustomID('cool-custom-id')
+    .setPlaceHolder('Select an option');
+    
+    const Wtthelp = new Discord.MessageEmbed()
+      .setColor('#0099ff')
+      .setTitle('Windows Tect Tips')
+      .setURL('https://WindowsTechTipsBot.pp25.repl.co')
+      .setDescription(`My prefix was ${prefix}`)
+      .setThumbnail(image)
+      .addFields(
+        {name: '__***Basic Commands***__', value: `Commands for Mods and Non Mods`},
+        {name: 'Ping', value: `${prefix}ping`, inline:true},
+        {name: 'whoami', value: `${prefix}whoami`, inline:true},
+        {name: '__***Moderation Commands***__', value: `Commands for Mods Only`},
+        {name: 'Exec [linux cmds]', value: `exec [linux command]`, inline:true},
+        {name: 'kick', value: `${prefix}kick`, inline:true},
+        {name: 'mute', value: `${prefix}mute`, inline:true},
+        {name: 'unmute', value: `${prefix}unmute`, inline:true},
+        {name: 'Block Words', value: `${prefix}addbword`, inline:true},
+        {name: 'Del Block Words', value: `${prefix}rembword [word]`, inline:true},
+        {name: '__**Music Commands**__', value: `Lets Hear the Musics`},
+        {name: 'play [yt url or id]', value: `${prefix}play`, inline:true},
+        {name: 'skip', value: `${prefix}skip`, inline:true},
+        {name: 'stop', value: `${prefix}stop`, inline:true},
+      )
+      .setFooter(`**${version}**`);
+      MenusManager.sendMenu(message, Wtthelp.setDescription('Select'), { menu: myCoolMenu }).then(msg => {
+            console.log(msg.id);
+            
+      })
+
+   // message.channel.send(Wtthelp);
+  }else if(message.content === `hi`){
+    message.channel.send("Hello");
+  }
+
+  if(message.content.startsWith(`${prefix}addMember`)){
+    if(message.member.hasPermission('MANAGE_ROLES')){
+      //const gRole = message.guild.roles.cache.find(role => role.name === '🎭Members🎭');
+      const gRole =  message.guild.roles.cache.find(role => role.name === '🎭Members🎭');
+      const member = message.mentions.members.first();
+      if(!member){
+        message.channel.send(':x: please mention a user');
+        return;
+      }
+      member.roles.add(gRole).catch(error=>{
+        message.channel.send(':x: cant assign role');
+      });
+       message.channel.send(`${member} was a member of WindowsTechTips`);
+    }else{
+      message.channel.send("You cannot add roles");
+    }
+  }
+
+  if(message.content.startsWith(`${prefix}mute`)){
+    if(message.member.hasPermission('MANAGE_ROLES')){
+      //const gRole = message.guild.roles.cache.find(role => role.name === '🎭Members🎭');
+      const gRole =  message.guild.roles.cache.find(role => role.name === 'Muted');
+      const member = message.mentions.members.first();
+      if(!member){
+        message.channel.send(':x: please mention a user');
+        return;
+      }
+      member.roles.add(gRole).catch(error=>{
+        message.channel.send(':x: Sorry , i cant mute him/her');
+      });
+       message.channel.send(`${member} Muted Silent /**crackles**`);
+    }else{
+      message.channel.send("Wait , Who are you , you arent a mod or something else");
+    }
+  }
+
+  
+  if(message.content.startsWith(`${prefix}unmute`)){
+    if(message.member.hasPermission('MANAGE_ROLES')){
+      //const gRole = message.guild.roles.cache.find(role => role.name === '🎭Members🎭');
+      const gRole =  message.guild.roles.cache.find(role => role.name === 'Muted');
+      const member = message.mentions.members.first();
+      if(!member){
+        message.channel.send(':x: please mention a user');
+        return;
+      }
+      member.roles.remove(gRole).catch(error=>{
+        message.channel.send(':x: Sorry , i cant mute him/her');
+      });
+      message.channel.send(`${member} was UnMuted`);
+    }else{
+      message.channel.send("Wait , Who are you , you arent a mod or something else");
+    }
+  }
+
+  if(message.content === `${prefix}rank`){
+    ctx.restore();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Write "Awesome!"
+    ctx.font = '22px Impact'
+    ctx.fillText(ranks.get(message.author.id) + " - Rank!", 50, 100)
+    ctx.fillStyle = '#0023'
+    ctx.fillRect(0, 0, 1080, 1920)
+    // Draw line under text
+    var text = ctx.measureText(ranks.get(message.author.id) + " - Rank!")
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)'
+    ctx.beginPath()
+    ctx.lineTo(50, 102)
+    ctx.lineTo(50 + text.width, 102)
+    ctx.stroke()
+
+    // Draw cat with lime helmet
+    loadImage('./rank.png').then((image) => {
+      ctx.drawImage(image, 50, 0, 70, 70)
+    })
+    setTimeout(function(){
+      canvas.toBuffer((err, buf) => {
+        if (err) throw err 
+          message.channel.send({
+            files: [{
+              attachment: buf,
+              name: 'ranked.jpg'
+            }]
+          })
+          .then(console.log)
+          .catch(console.error);
+      })
+    },200);
+  }
+  if(message.content.includes(`${prefix}wttfy`)){
+    if(message.author.id == 808939560041840681){}else{ return message.channel.send("Not a dev"); }
+    result = str_replace(`wtt!wttfy`,'', message.content, true);
+    ctx.restore();
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Write "Awesome!"
+    ctx.font = '22px Impact'
+    ctx.fillText(result, 50, 100)
+    ctx.fillStyle = '#0023'
+    ctx.fillRect(0, 0, 1080, 1920)
+    // Draw line under text
+    var text = ctx.measureText(result)
+    ctx.strokeStyle = 'rgba(0,0,0,0.5)'
+    ctx.beginPath()
+    ctx.lineTo(50, 102)
+    ctx.lineTo(50 + text.width, 102)
+    ctx.stroke()
+
+    // Draw cat with lime helmet
+    loadImage('./rank.png').then((image) => {
+      ctx.drawImage(image, 50, 0, 70, 70)
+    })
+    setTimeout(function(){
+      canvas.toBuffer((err, buf) => {
+        if (err) throw err 
+          message.channel.send({
+            files: [{
+              attachment: buf,
+              name: 'ranked.jpg'
+            }]
+          })
+          .then(console.log)
+          .catch(console.error);
+      })
+    },200);
+  }
+  if(message.content === `${prefix}whoami`){
+     const whoami = new Discord.MessageEmbed()
+        .setColor('#0099ff')
+        .setTitle('Profiler')
+        .setURL('https://WindowsTechTipsBot.pp25.repl.co')
+      
+        .setDescription('Lol you forget that who are you bruh')
+        .setThumbnail(message.author.avatarURL())
+        .addFields(
+          { name: 'Username', value: `${message.author.username}`, inline:true },
+          { name: 'Usertag', value: `${message.author.tag}`, inline:true },
+          { name: 'ID', value: `${message.author.id}`, inline:true },
+          { name: 'IS Bot', value: `${message.author.bot}`, inline:true },
+        )
+        .setTimestamp()
+        .setFooter('WTT', message.author.avatarURL());
+    message.channel.send(whoami);
+  }
+
+
+  if(message.content.includes(`${prefix}eval`)){
+    if(message.author.id == 808939560041840681){}else{ return message.channel.send("Not a dev"); }
+      result = str_replace(`wtt!eval`,'', message.content, true);
+      const whoami = new Discord.MessageEmbed()
+        .setColor('#0099ff')
+        .setTitle('Evaler')
+        .setDescription('Evalerrrrrr')
+        .setThumbnail(message.author.avatarURL())
+        .addFields(
+          { name: 'Result :', value: eval(result), inline:true },
+        )
+        .setTimestamp()
+        .setFooter('WTT', message.author.avatarURL());
+         message.channel.send(whoami);
+  }
+
+  if(message.content.includes(`${prefix}addbword `)){
+     if (!message.member.hasPermission("ADMINISTRATOR")) return ;
+      result = str_replace(`wtt!addbword `,'', message.content, true);
+        var getStore = store.get('blockwords');
+        if(store.get('blockwords') == undefined || store.get('blockwords') == []){
+        store.set('blockwords', []); 
+      }else{
+        var savestored = getStore ;
+        savestored.push(result);
+        console.log(savestored);
+        store.set('blockwords', savestored); 
+        message.channel.send("Added Blocked Word");
+      }
+  }
+
+  if(message.content.includes(`${prefix}rembword `)){
+    if (!message.member.hasPermission("ADMINISTRATOR")) return ;
+    result = str_replace(`wtt!rembword `,'', message.content, true);
+    var getStore = Array.from(store.get('blockwords'));
+      
+    for( var i = 0; i < getStore.length; i++){ 
+        if ( getStore[i] === result) { 
+            getStore.splice(i, 1); 
+        }
+    }
+    store.set("blockwords",getStore);
+    message.channel.send("Deleted Blocked Word");
+      
+  }
+
+  if(message.content.includes(`wtt!exec`)){
+    if (message.member.hasPermission("ADMINISTRATOR")) {
+      result = str_replace(`wtt!exec`,'', message.content, true);
+      const { exec } = require("child_process");
+      exec(result, (error, stdout, stderr) => {
+        message.channel.send({
+          embed: {
+            color: 'ORANGE',
+            footer:{ text: 'Result below' },
+            timestamp: new Date(),
+                  description: `Result ${stderr}${stdout}`,
+            },
+        });     
+        });
+      }
+      else{ 
+        message.channel.send(":x: You don't have perms");
+      }
+  }
+});
+
+
+
+
+client.on('messageReactionAdd', async (reaction, user, message) => {
+   
+});
+
+
+client.on('messageDelete', async message => {
+	// ignore direct messages
+	if (!message.guild) return;
+	const fetchedLogs = await message.guild.fetchAuditLogs({
+		limit: 1,
+		type: 'MESSAGE_DELETE',
+	});
+	
+	const deletionLog = fetchedLogs.entries.first();
+  const { executor, target } = deletionLog;
+  const channel = message.guild.channels.cache.find(ch => ch.name === 'mod-logs');
+	if (!deletionLog) return console.log("");
+  const deleteEmbed = new Discord.MessageEmbed()
+    .setColor('#0099ff')
+    .setTitle('Logging')
+    .setURL('https://WindowsTechTipsBot.pp25.repl.co')
+    .setDescription(`Message By : ${message.author.tag}`)
+    .setThumbnail(image)
+    .addFields(
+      { name: 'Message Content ', value: message.content },
+          
+    )
+    .setTimestamp()
+    .setFooter('Exec', message.author.avatarURL());
+  channel.send(deleteEmbed)
+
+	if (target.id === message.author.id) {
+		console.log(`A message by ${message.author.tag} was deleted by ${executor.tag}.`);
+
+    message.send(`A message by ${message.author.tag} was deleted by ${executor.tag}.`)
+	} else {
+		console.log(`A message by ${message.author.tag} was deleted, but we don't know by who.`);
+	}
+});
+
+client.on('message', message => {
+  if (!message.guild) return;
+  if (message.content.startsWith(`${prefix}kick`)) {
+  if(message.member.hasPermission('KICK_MEMBERS')){
+  if (!message.guild) return;
+  if (message.content.startsWith(`${prefix}kick`)) {
+    const user = message.mentions.users.first();
+    if (user) {
+      const member = message.guild.members.resolve(user);
+      if (member) {
+        member
+          .kick('Optional reason that will display in the audit logs')
+          .then(() => {
+            message.channel.send(`Successfully kicked ${user.tag}`);
+            const channel = message.guild.channels.cache.find(ch => ch.name === 'mod-logs');
+            const deleteEmbed = new Discord.MessageEmbed()
+              .setColor('#0099ff')
+              .setTitle('Logging')
+              .setURL('https://WindowsTechTipsBot.pp25.repl.co')
+              .setDescription(`Kicked a user`)
+              .setThumbnail(image)
+              .addFields(
+                { name: 'Kicked ', value: user.tag },
+                { name: `Responsible Mod: :`, value:message.author.username, inline:true },
+              )
+              .setTimestamp()
+              .setFooter('for Wtt only', message.author.avatarURL());
+          channel.send(deleteEmbed)
+          })
+          .catch(err => {
+            message.channel.send(':x: I was unable to kick the member');
+            console.error(err);
+          });
+      } else {
+        message.channel.send(":x: That user isn't in this Server!");
+      }
+    } else {
+      message.channel.send(":x: You didn't mention the user to kick!");
+    }
+  }
+  }
+  }
+  
+});
+MenusManager.on('MENU_CLICKED', (menu) => {
+  if(menu.customID === 'cool-custom-id'){
+    console.log(menu.values[0])
+    if(menu.values[0] == 'value-1'){
+      menu.reply('**Moderation** Commands are only for mods :D').then(msg => {
+          msg.delete({ timeout: 10000 })
+      });
+    }
+    else
+    if(menu.values[0] == 'value-2'){
+      menu.reply('**Normal People** Commands are only for normal peoples xdddd :D').then(msg => {
+          msg.delete({ timeout: 10000 })
+      })
+    }
+    else
+    if(menu.values[0] == 'value-3'){
+      menu.reply('**ChatBot** Coming Soooooon').then(msg => {
+          msg.delete({ timeout: 10000 })
+      })
+    }
+  }
+});
