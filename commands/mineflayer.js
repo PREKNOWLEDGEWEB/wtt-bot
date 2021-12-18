@@ -1,24 +1,35 @@
 function createBot(){
-
+  
   const bot = mineflayer.createBot({
     host: process.env['ip'],
     port: 25565,
     username: 'WTTMediaBot',
-    version: "1.12"
+    version: "1.16"
   })
 
-  bot.on('chat', (username, message) => {
-    if (username === bot.username) return;
-    client.on('message', message => {
+  client.on('message', message => {
+      //if(message.channel.id !== 906751448086356040) return;
+      if(message.author.bot) return;
+      sendMessagetoLogs(message.toString(),"906751448086356040",false);
       if(message.content.includes(`${prefix}botexec`)){
-        if(message.author.id == 808939560041840681){}else{ return message.channel.send("Not a dev"); }
+        if(message.author.id == 808939560041840681){
+
+        }else if(message.author.id == 871753042591105064){ 
+         
+        }else{
+           return message.channel.send("Not a dev");
+        }
         result = str_replace(`wtt!botexec`,'', message.content, true);
-        sendMessagetoLogs("Bruh sending","906751448086356040",false);
+        sendMessagetoLogs("sending" + result,"906751448086356040",false);
         bot.chat(result);
       }
     });
-    if(message.includes('hi')){
-      bot.chat("hi " + username);
+
+  bot.on('chat', (username, message) => {
+    if (username === bot.username) return;
+  
+    if(message.toLowerCase().startsWith('hi')){
+      bot.chat(`Hi ${username}!`);
     }
   })
 
@@ -144,11 +155,11 @@ function createBot(){
 
   // Log errors and kick reasons:
   bot.on('kicked', function(){
-    sendMessagetoLogs("Bot was kicked","906751448086356040",false);
+    sendMessagetoLogsMC("Bot was kicked","906751448086356040",false);
     createBot();
   })
   bot.on('error', function(){
-    sendMessagetoLogs("Press F Bot crashed will rejoin in 20 seconds","906751448086356040",false);
+    sendMessagetoLogsMC("Press F Bot crashed will rejoin in 20 seconds","906751448086356040",false);
     createBot();
   })
 }

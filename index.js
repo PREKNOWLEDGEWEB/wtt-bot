@@ -28,13 +28,31 @@ const ranks = require('data-store')({ path: './data/ranks.json' });
 client.once('ready', () => {
 	console.log('Ready!');
   client.user.setActivity('hi', { type: 'WATCHING' });
-  sendMessagetoLogs("Bot has been started");
+  sendMessagetoLogsMC("Bot started \n Name : WTTMediaBot \n Gender : Female \n Born : 16 / 12 /2021");
   stat();
 });
 
 function sendMessagetoLogs(msge,cid,usa = false){
   const guild = client.guilds.cache.get("824965198741372949");
-  const channel = guild.channels.cache.get(cid || '917810836007948329');
+  var channel = guild.channels.cache.get('917810836007948329');
+  if(store.get('advancedLoggin') == false)return;
+  const Wtthelp = new Discord.MessageEmbed()
+    .setColor('#0099ff')
+    .setTitle('Windows Tect Tips Advanced Logging')
+    .setURL('https://WindowsTechTipsBot.pp25.repl.co')
+    .setDescription(msge)
+    .setFooter(`**${version}** oh ok creeper`);
+  if(usa){
+    channel.send(Wtthelp);
+  }else{
+    channel.send(msge);
+  }
+  console.log("Log:"+msge);
+}
+
+function sendMessagetoLogsMC(msge,cid,usa = false){
+  const guild = client.guilds.cache.get("824965198741372949");
+  var channel = guild.channels.cache.get('906751448086356040');
   if(store.get('advancedLoggin') == false)return;
   const Wtthelp = new Discord.MessageEmbed()
     .setColor('#0099ff')
