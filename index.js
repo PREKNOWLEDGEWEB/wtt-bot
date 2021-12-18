@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const { DiscordMenus, ButtonBuilder, MenuBuilder } = require('discord-menus');
+const mineflayer = require('mineflayer')
 const client = new Discord.Client();
 const MenusManager = new DiscordMenus(client);
 const Memer = require("random-jokes-api");
@@ -31,9 +32,9 @@ client.once('ready', () => {
   stat();
 });
 
-function sendMessagetoLogs(msge){
+function sendMessagetoLogs(msge,cid,usa = false){
   const guild = client.guilds.cache.get("824965198741372949");
-  const channel = guild.channels.cache.get('917810836007948329');
+  const channel = guild.channels.cache.get('917810836007948329' || cid);
   if(store.get('advancedLoggin') == false)return;
   const Wtthelp = new Discord.MessageEmbed()
     .setColor('#0099ff')
@@ -41,7 +42,11 @@ function sendMessagetoLogs(msge){
     .setURL('https://WindowsTechTipsBot.pp25.repl.co')
     .setDescription(msge)
     .setFooter(`**${version}** oh ok creeper`);
-  channel.send(Wtthelp);
+  if(usa){
+    channel.send(Wtthelp);
+  }else{
+    channel.send(msge);
+  }
   console.log("Log:"+msge);
 }
 
