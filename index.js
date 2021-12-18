@@ -34,7 +34,7 @@ client.once('ready', () => {
 
 function sendMessagetoLogs(msge,cid,usa = false){
   const guild = client.guilds.cache.get("824965198741372949");
-  const channel = guild.channels.cache.get('917810836007948329' || cid);
+  const channel = guild.channels.cache.get(cid || '917810836007948329');
   if(store.get('advancedLoggin') == false)return;
   const Wtthelp = new Discord.MessageEmbed()
     .setColor('#0099ff')

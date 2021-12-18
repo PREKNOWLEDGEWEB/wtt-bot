@@ -28,19 +28,13 @@ function createBot(){
     if (username === bot.username) return
     //target = bot.players[username].entity
     let entity
-    if(!bot.time.isDay){
-      bot.sleep();
-    }
+
     switch (message) {
       case 'forward':
         bot.setControlState('forward', true)
         break
       case 'back':
         bot.setControlState('back', true)
-        break
-      case 'sleep':
-        bot.clearControlStates()
-        bot.sleep();
         break
       case 'left':
         bot.setControlState('left', true)
