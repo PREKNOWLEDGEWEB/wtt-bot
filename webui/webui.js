@@ -56,6 +56,13 @@ app.get('/verify',function (req , res){
   })
 })
 
+app.get('/',function (req , res){
+  fs.readFile(process.cwd()+'/index.html', 'utf8' , (err, data) => {
+    res.write(data);
+    res.end();
+  })
+})
+
 app.get('/page_isDone',function (req , res){
   fs.readFile(process.cwd()+'/webui/views/isDone.html', 'utf8' , (err, data) => {
     res.write(data);

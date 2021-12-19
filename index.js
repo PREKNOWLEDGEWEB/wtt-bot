@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const { DiscordMenus, ButtonBuilder, MenuBuilder } = require('discord-menus');
 const mineflayer = require('mineflayer')
 const client = new Discord.Client();
+const axios = require('axios');
 const MenusManager = new DiscordMenus(client);
 const Memer = require("random-jokes-api");
 const ytdl = require("ytdl-core");
@@ -57,7 +58,7 @@ function sendMessagetoLogsMC(msge,cid,usa = false){
   const Wtthelp = new Discord.MessageEmbed()
     .setColor('#0099ff')
     .setTitle('Windows Tect Tips Advanced Logging')
-    .setURL('https://WindowsTechTipsBot.pp25.repl.co')
+    .setURL('https://wtt-bot.preknowledgeweb.repl.co')
     .setDescription(msge)
     .setFooter(`**${version}** oh ok creeper`);
   if(usa){
@@ -127,7 +128,7 @@ try{
 //client.on('message',(message) =>{if(message.author.bot)return;sendMessagetoLogs("Message: \n **"+message.content+"** \n By : "+message.author.tag)})
 client.on('guildMemberAdd', (member) => {
   const gRole =  member.guild.roles.cache.find(role => role.name === '👥Members');
-  member.send('Hello Psst! Please Verify here > https://windowstechtipsbot.preknowledgeweb.repl.co/verify/?a='+member.id);
+  member.send('Hello Psst! Please Verify here > https://wtt-bot.preknowledgeweb.repl.co/verify/?a='+member.id);
   const channel = member.guild.channels.cache.get('891543665313460234');
   channel.send(
    `Welcome ${member.user.tag} ! to WindowsTechTips Community!  we hope you enjoy staying here at this server! Before You start Messaging Do Read The rules! 🙂 `
@@ -135,7 +136,14 @@ client.on('guildMemberAdd', (member) => {
 });
 
 client.login(process.env['key']);
-
+setInterval(function(){
+  axios.get('https://wtt-bot.preknowledgeweb.repl.co')
+  .then(function (response) {
+    //console.log("Zombie Groans!!!");
+  }).catch(function (error) {
+    console.log("Zombie dies");
+  });
+},800);
 }catch(e){
   console.log("whoops");
 }

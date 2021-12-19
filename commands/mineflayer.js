@@ -41,34 +41,34 @@ function createBot(){
     let entity
 
     switch (message) {
-      case 'forward':
-        bot.setControlState('forward', true)
-        break
-      case 'back':
-        bot.setControlState('back', true)
-        break
-      case 'left':
-        bot.setControlState('left', true)
-        break
-      case 'right':
-        bot.setControlState('right', true)
-        break
-      case 'sprint':
-        bot.setControlState('sprint', true)
-        break
-      case 'stop':
-        bot.clearControlStates()
-        break
-      case 'jump':
-        bot.setControlState('jump', true)
-        bot.setControlState('jump', false)
-        break
-      case 'jump a lot':
-        bot.setControlState('jump', true)
-        break
-      case 'stop jumping':
-        bot.setControlState('jump', false)
-        break
+      // case 'forward':
+      //   bot.setControlState('forward', true)
+      //   break
+      // case 'back':
+      //   bot.setControlState('back', true)
+      //   break
+      // case 'left':
+      //   bot.setControlState('left', true)
+      //   break
+      // case 'right':
+      //   bot.setControlState('right', true)
+      //   break
+      // case 'sprint':
+      //   bot.setControlState('sprint', true)
+      //   break
+      // case 'stop':
+      //   bot.clearControlStates()
+      //   break
+      // case 'jump':
+      //   bot.setControlState('jump', true)
+      //   bot.setControlState('jump', false)
+      //   break
+      // case 'jump a lot':
+      //   bot.setControlState('jump', true)
+      //   break
+      // case 'stop jumping':
+      //   bot.setControlState('jump', false)
+      //   break
       case 'attack':
         entity = bot.nearestEntity()
         if (entity) {
@@ -77,17 +77,17 @@ function createBot(){
           bot.chat('no nearby entities')
         }
         break
-      case 'mount':
-        entity = bot.nearestEntity((entity) => { return entity.type === 'object' })
-        if (entity) {
-          bot.mount(entity)
-        } else {
-          bot.chat('no nearby objects')
-        }
-        break
-      case 'dismount':
-        bot.dismount()
-        break
+      // case 'mount':
+      //   entity = bot.nearestEntity((entity) => { return entity.type === 'object' })
+      //   if (entity) {
+      //     bot.mount(entity)
+      //   } else {
+      //     bot.chat('no nearby objects')
+      //   }
+      //   break
+      // case 'dismount':
+      //   bot.dismount()
+      //   break
       case 'move vehicle forward':
         bot.moveVehicle(0.0, 1.0)
         break
@@ -100,9 +100,9 @@ function createBot(){
       case 'move vehicle right':
         bot.moveVehicle(-1.0, 0.0)
         break
-      case 'tp':
-        bot.entity.position.y += 10
-        break
+      // case 'tp':
+      //   bot.entity.position.y += 10
+      //   break
       case 'pos':
         bot.chat(bot.entity.position.toString())
         break
